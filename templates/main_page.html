@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<form style="" action="#" method="post">
+    <table style="margin-left: auto; margin-right: auto;">
+        <tr>
+            <td><p>Markė:</p></td>
+            <td><select id="makeSel" name="mk">
+                <option value="" selected="selected">Pasirinkite markę</option>
+                </select></td>
+        </tr>
+        <tr>
+            <td class="title"><p>Modelis:</p></td>
+            <td><select id="modelSel" name="mdl">
+                <option value="" selected="selected">Pasirinkite modelį</option>
+                </select></td>
+        </tr>
+        <tr>
+            <td><p>Metai:</p></td>
+            <td><select id="yearSel" name="yr">
+            <option value="" selected="selected">Pasirinkite metus</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td class="title"><p>Kėbulas:</p></td>
+            <td><select class="select_field" name="typ">
+            <option value="sedanas">Sedanas</option>
+            <option value="hečbekas">Hečbekas</option>
+            <option value="universalas">Universalas</option>
+            <option value="visureigis">Visureigis</option>
+            <option value="vienatūris">Vienatūris</option>
+            <option value="(coupe)">Kupė</option>
+            <option value="kabrioletas">Kabrioletas</option>
+            <option value="limuzinas">Limuzinas</option>
+            <option value="mikroautobusai">Mikroautobusas</option>
+            <option value="pikapas">Pikapas</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><p>Rida (km):</p></td>
+            <td><p><input type="text" name="mile"/></p></td>
+        </tr>
+        <tr>
+            <td><p>Pavarų dėžė:</p></td>
+            <td><select class="select_field" name="trn">
+                <option value="Mechaninė">Mechaninė</option>
+                <option value="Automatinė">Automatinė</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><p>Kuras:</p></td>
+            <td><select class="select_field" name="fl">
+                <option name="Dyzelinas">Dyzelinas</option>
+                <option name="Benzinas">Benzinas</option>
+                <option name="Benzinas / dujos">Benzinas / dujos</option>
+                <option name="Benzinas / elektra">Benzinas / elektra</option>
+                <option name="Elektra">Elektra</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><p>Variklio tūris (pvz: 1.8):</p></td>
+            <td><p><input type="text" name="eng"/></p></td>
+        </tr>
+        </table>
+    <div style="text-align:center;">
+        <p style="color:red;">{{result}}</p>
+        <input type="submit" value="submit"/>
+    </div>
+</form>
+</div>
+{% endblock %}

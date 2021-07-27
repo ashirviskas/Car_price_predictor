@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 style="text-align:center;">Tikėtina automobilio rinkos kaina:</h1><br>
+<h2 style="text-align:center; font-weight: bold;">{{result}} EUR</h2><br>
+<p style="text-align: center;">Apmokyto modelio tikslumas : {{score}} %</p><br><br>
+<h3>Kriterijus atitinkantys duomenų bazės įrašai:</h3><br>
+<table style="text-align: center; border-collapse: collapse; width: 80%; margin: auto;">
+{% for index,row in posts.iterrows() %}
+<tr style="border-bottom: 1pt dashed black;">
+    <td style="display: table-cell; vertical-align: middle;">{{row['make']}}</td>
+    <td style="display: table-cell; vertical-align: middle;">{{row['model']}}</td>
+    <td style="display: table-cell; vertical-align: middle;">{{row['type']}}</td>
+    <td style="display: table-cell; vertical-align: middle;">{{row['year']}}</td>
+    <td style="display: table-cell; vertical-align: middle;">{{row['mileage']}} km</td>
+    <td style="display: table-cell; vertical-align: middle;">{{row['tran']}}</td>
+    <td style="display: table-cell; vertical-align: middle;">{{row['fuel']}}</td>
+    <td style="display: table-cell; vertical-align: middle;">{{row['engine']}}</td>
+
+    <td style="display: table-cell; vertical-align: middle; font-weight: bold;">{{row['price']}}
+        Eur</td>
+</tr>
+{% endfor %}
+    </table>
+<br><a href="/" class="btn default">Grįžti</a>
+{% endblock %}

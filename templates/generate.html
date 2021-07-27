@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 style="text-align:center;">Mokėjimų ataskaita</h1><br><br>
+<div style="display: flex; justify-content: center; text-align: center;">
+{% for table in tables %}
+    {{ table|safe }}
+  {% endfor %}
+</div>
+<br><a href="/show_all" class="btn default">Grįžti</a>
+{% endblock %}

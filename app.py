@@ -19,10 +19,8 @@ def enter_details():
             fuel = request.form['fl']
             other = [make, model, body_type, trans, fuel]
             params = create_params(year, mileage, engine, other)
-            predictor = AutopliusPredictor()
-            ml_model, score = predictor.train_model()
-            params_trans = predictor.polynomial_features.transform(params)
-            valuation = ml_model.predict([params_trans])[0]
+            ml_model, score = AutopliusPredictor().train_model()
+            valuation = ml_model.predict([params])[0]
             ads = filter_ads(make, model, year)
             if ads.empty:
                 return render_template('valuation_no_results.html', result=f'{round(int(valuation), 0):,}', score=f'{round(score*100,2)}')

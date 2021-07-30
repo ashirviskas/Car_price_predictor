@@ -2,6 +2,7 @@ import pandas as pd
 import sqlite3
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 import pickle
 from time import perf_counter
 from database import ModelByMake, db
@@ -55,6 +56,8 @@ class AutopliusPredictorByMake:
         """
         cols = self.final_df.columns.to_list()
         X = self.final_df[cols[1:]]
+        #self.polynomial_features = PolynomialFeatures(degree=4)
+        #X_TRANSF = self.polynomial_features.fit_transform(X)
         y = self.final_df['price']
         X_train, X_test, y_train, y_test = \
             train_test_split(X, y, test_size=0.25, random_state=42)
@@ -110,7 +113,7 @@ class AutopliusPredictorByMake:
         result_df['diff_%'] = (result_df['price'] - result_df['test_price']) / result_df[
             'test_price']*100
         conn = self.connect_to_db()
-        result_df.to_sql(name=f'{self.make}_predictions', con=conn)
+        result_df.to_sql(name=f'{self.make}_prediction', con=conn)
 
 
 def run_all_models():
@@ -124,6 +127,7 @@ def run_all_models():
     db.create_all()
     con = sqlite3.connect("autoplius_data.sqlite")
     thelist = pd.read_sql_query('SELECT DISTINCT make FROM scraped_data_final', con)['make']
+    print(thelist)
     for make in thelist:
         model, score = AutopliusPredictorByMake(make).train_model()
         entry = ModelByMake(make, score)
@@ -164,3 +168,7 @@ def filter_ads(make, model, year):
     conn = sqlite3.connect("autoplius_data.sqlite")
     list_of_ads = pd.read_sql_query(f'SELECT * FROM scraped_data_final WHERE make="{str(make)}" AND model="{str(model)}" AND year="{str(year)}"', conn)
     return list_of_ads
+
+
+if __name__ == '__main__':
+    run_all_models()

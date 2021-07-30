@@ -2,7 +2,6 @@ import pandas as pd
 import sqlite3
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures
 import pickle
 from time import perf_counter
 
@@ -54,11 +53,9 @@ class AutopliusPredictor:
         """
         cols = self.final_df.columns.to_list()
         X = self.final_df[cols[1:]]
-        self.polynomial_features = PolynomialFeatures(degree=4)
-        X_TRANSF = self.polynomial_features.fit_transform(X)
         y = self.final_df['price']
         X_train, X_test, y_train, y_test = \
-            train_test_split(X_TRANSF, y, test_size=0.3, random_state=42)
+            train_test_split(X, y, test_size=0.3, random_state=42)
         return X_train, X_test, y_train, y_test
 
     def train_model(self):

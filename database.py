@@ -41,7 +41,7 @@ class Autoplius(db.Model):
 
 
 class ModelByMake(db.Model):
-    __tablename__ = 'scores_by_model'
+    __tablename__ = 'scores_by_make'
     id = db.Column(db.Integer, primary_key=True)
     make = db.Column(db.String)
     score = db.Column(db.Float)

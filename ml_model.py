@@ -35,12 +35,29 @@ class AutopliusPredictor:
         """
         con = self.connect_to_db()
         df = pd.read_sql_query("SELECT * FROM scraped_data_final", con)
+        makes = df['make'].unique()
+        # Atskirų make atskiri df'ai liste
+        new_df = None
+        for m in makes:
+            make_df = df.loc[df['make'] == m]
+            make_dummies_model = pd.get_dummies(make_df['model'])
+            # Droppinam column names, kad nesimaišytų paskui
+            make_dummies_model = make_dummies_model.rename_axis(None)
+            make_df = pd.concat([make_df, make_dummies_model], axis=1)
+
+            if new_df is None:
+                new_df = make_df
+            else:
+                new_df = pd.concat([new_df, make_df])
+
+        df = new_df
+
         dummies_make = pd.get_dummies(df['make'])
-        dummies_model = pd.get_dummies(df['model'])
+        # dummies_model = pd.get_dummies(df['model'])
         dummies_tran = pd.get_dummies(df['tran'])
         dummies_type = pd.get_dummies(df['type'])
         dummies_fuel = pd.get_dummies(df['fuel'])
-        self.final_df = pd.concat([df, dummies_make, dummies_model, dummies_type, dummies_tran, dummies_fuel], axis=1)
+        self.final_df = pd.concat([df, dummies_make, dummies_type, dummies_tran, dummies_fuel], axis=1)
         self.final_df.drop(['id', 'make', 'model', 'type', 'tran', 'fuel'], axis=1, inplace=True)
         price = self.final_df.pop('price')
         self.final_df.insert(0, 'price', price)
